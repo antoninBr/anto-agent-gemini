@@ -140,9 +140,18 @@ echo '{"tool_name":"run_shell_command","tool_input":{"command":"git status"}}' \
 # Attendu : exit=0, pas de sortie
 ```
 
-### Désactiver temporairement les hooks
+### Lister / désactiver les hooks depuis Gemini
 
-Si un hook gêne (faux positif, debug), commente l'entrée correspondante dans `hooks/hooks.json` et redémarre Gemini.
+Dans le prompt interactif :
+
+```
+/hooks panel              # vue détaillée de tous les hooks chargés
+/hooks disable <name>     # désactive un hook par nom (ex: git-destructive-guard)
+/hooks enable  <name>     # le réactive
+/hooks disable-all        # coupe tout
+```
+
+Pour une désactivation **persistante**, commente l'entrée correspondante dans `hooks/hooks.json` et redémarre Gemini.
 
 ### Ajouter un hook
 
