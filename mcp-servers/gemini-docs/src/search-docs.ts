@@ -63,9 +63,13 @@ async function searchGitHub(
 
   const response = await request(url, { headers });
 
-  if (response.statusCode === 403) {
+  if (response.statusCode === 401 || response.statusCode === 403) {
+    const reason =
+      response.statusCode === 401
+        ? "GitHub Code Search exige une authentification"
+        : "Rate-limit GitHub atteint";
     throw new Error(
-      "Rate-limit GitHub atteint. Définis la variable d'env GITHUB_TOKEN pour relever la limite.",
+      `${reason}. Définis la variable d'env GITHUB_TOKEN (token GitHub personnel, sans scope spécial requis pour la recherche publique).`,
     );
   }
   if (response.statusCode !== 200) {
