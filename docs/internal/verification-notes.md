@@ -154,6 +154,13 @@ Aucune divergence sur :
 - `gemini extensions list` / `gemini extensions uninstall <name>` (confirmés).
 - `engines.node >= 20.0.0` (à reporter dans `01-prerequis.md` en Tâche 11).
 
+## Découvertes en cours d'implémentation
+
+- **GitHub Code Search exige un `GITHUB_TOKEN`** (renvoie 401 sans token, pas 403). Le code MCP gère 401 et 403 avec le même message proposant `GITHUB_TOKEN`. **Conséquence pour la doc** :
+  - `mcp-servers/gemini-docs/README.md` (Tâche 6) doit présenter `GITHUB_TOKEN` comme **requis**, pas optionnel.
+  - `docs/01-prerequis.md` (Tâche 11) doit inclure une section "obtenir un GITHUB_TOKEN" (Settings → Developer settings → Personal access tokens, classic ou fine-grained, **sans scope spécial requis** pour la search publique).
+  - `docs/03-utilisation.md` (Tâche 13) : troubleshooting mentionner aussi 401 en plus du rate-limit.
+
 ## Limites de la vérification
 
 - Aucune vérification "live" d'un binaire `gemini` n'a été faite (pas d'install dans cet environnement). Tout repose sur la doc de la branche `main` du repo officiel à la date ci-dessus.
