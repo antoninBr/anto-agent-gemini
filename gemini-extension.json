@@ -1,0 +1,12 @@
+{
+  "name": "anto-agent-gemini",
+  "version": "0.1.0",
+  "description": "Assistant d'enablement Gemini : produit fiches concepts et labs guidés en français.",
+  "mcpServers": {
+    "gemini-docs": {
+      "command": "node",
+      "args": ["${extensionPath}${/}mcp-servers${/}gemini-docs${/}dist${/}index.js"],
+      "cwd": "${extensionPath}"
+    }
+  }
+}
