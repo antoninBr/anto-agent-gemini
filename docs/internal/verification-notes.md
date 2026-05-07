@@ -53,8 +53,8 @@
 - **Emplacement** :
   - User (global) : `~/.gemini/commands/`
   - Projet (local) : `<project-root>/.gemini/commands/`
+  - **Extension : `<extension-root>/commands/<name>.toml`** — confirmé par `docs/extensions/reference.md` ("Provide custom commands by placing TOML files in a `commands/` subdirectory") et `docs/extensions/writing-extensions.md` (exemple `commands/fs/grep-code.toml` → `/fs:grep-code`). Source vérifiée le 2026-05-07 par WebFetch direct sur le repo officiel.
   - En cas de collision de nom, **la commande projet l'emporte sur la user**.
-  - Le doc `custom-commands.md` ne précise **pas** explicitement le mapping pour les commandes fournies par une extension. À retester en pratique en Tâche 16. Hypothèse de travail conservatrice : une extension qui contient un dossier `commands/<name>.toml` expose `/<name>` (à confirmer).
 - **Mapping fichier → nom de commande** :
   - `test.toml` → `/test`
   - `git/commit.toml` → `/git:commit` (sous-dossier = namespace via `:`)
@@ -158,4 +158,4 @@ Aucune divergence sur :
 
 - Aucune vérification "live" d'un binaire `gemini` n'a été faite (pas d'install dans cet environnement). Tout repose sur la doc de la branche `main` du repo officiel à la date ci-dessus.
 - La page `docs/extensions/index.md` ne donne pas la syntaxe complète d'install local — celle-ci est reconstruite à partir de `docs/cli/cli-reference.md` et `docs/extensions/reference.md`. Si une discordance est observée à l'usage en Tâche 16, mettre à jour ces notes et le plan.
-- La doc ne précise pas explicitement le mapping `commands/<name>.toml` → `/<name>` **pour les commandes fournies par une extension** (le doc `custom-commands.md` couvre uniquement `~/.gemini/commands/` et `<project>/.gemini/commands/`). Hypothèse à valider en Tâche 16.
+- ~~La doc ne précise pas explicitement le mapping `commands/<name>.toml` → `/<name>` pour les commandes fournies par une extension.~~ **Levé le 2026-05-07** par lecture directe de `docs/extensions/reference.md` et `docs/extensions/writing-extensions.md` : le mapping est confirmé.
