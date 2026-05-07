@@ -25,11 +25,23 @@ Sortie attendue : une fiche markdown dans `content/concepts/<date>-extensions.md
 | Chemin | Rôle |
 |---|---|
 | `gemini-extension.json` | Manifeste de l'extension |
-| `GEMINI.md` | Persona/contexte de l'agent |
-| `commands/` | Skills (slash commands) `/concept` et `/lab` |
+| `GEMINI.md` | Persona/contexte de l'agent principal |
+| `commands/` | Slash commands `/concept` et `/lab` |
+| `skills/` | Expertises chargées à la demande (ex. `tldr-gemini`) |
+| `agents/` | **Sous-agents** délégables — voir ci-dessous |
 | `mcp-servers/gemini-docs/` | Serveur MCP TypeScript qui interroge la doc officielle |
 | `docs/` | Documentation pédagogique transférable |
 | `content/` | Artefacts produits par l'agent (concepts + labs) |
+
+## Sous-agents inclus
+
+Un **sous-agent** Gemini CLI n'est *pas* l'agent principal. C'est un agent **séparé**, avec sa propre persona, son propre contexte et son propre périmètre d'outils, que l'agent principal peut **déléguer** pour une tâche isolée. Il s'expose comme un outil — l'agent principal l'appelle, le sous-agent travaille dans une fenêtre de contexte indépendante, puis renvoie son résultat. Avantage : le va-et-vient interne du sous-agent ne pollue pas la session principale.
+
+| Sous-agent | Rôle | Invocation |
+|---|---|---|
+| `relecteur-pedagogique` | Relit une fiche concept ou un lab fraîchement généré et renvoie un verdict structuré (clarté, niveau, prérequis, rigueur factuelle), avec vérifications dans la doc officielle. | `@relecteur-pedagogique content/concepts/2026-05-07-extensions.md` |
+
+Cas d'usage typique : après un `/concept extensions`, déléguer la relecture au sous-agent pour avoir un avis indépendant avant publication, sans que l'agent principal qui orchestre la session ne soit biaisé par la conversation qui a produit la fiche.
 
 ## Statut
 
