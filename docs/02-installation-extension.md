@@ -54,6 +54,8 @@ Sortie attendue : une ligne `anto-agent-gemini` avec statut actif.
 gemini
 ```
 
+Sortie attendue **dès le démarrage** : une bannière `📚 anto-agent-gemini chargé.` listant les commandes et le garde-fou. Si elle n'apparaît pas, le hook `SessionStart` n'est pas chargé (vérifie `hooks/hooks.json` et que `scripts/*.sh` ont bien le bit exécutable — `ls -l scripts/` doit montrer `-rwxr-xr-x`).
+
 Puis dans le prompt :
 
 ```
@@ -125,6 +127,7 @@ Utile si une extension cause un conflit avec une autre. Le scope par défaut est
 | Symptôme | Solution |
 |---|---|
 | `/concept` n'apparaît pas dans `/help` | Vérifie `gemini extensions list` ; redémarre `gemini` ; vérifie que `commands/concept.toml` existe à la racine de l'extension installée. |
+| Bannière SessionStart absente | `chmod +x scripts/session-start.sh scripts/git-guard.sh` ; vérifie que `hooks/hooks.json` est présent à la racine de l'extension installée. |
 | Erreur "le MCP gemini-docs n'est pas disponible" | Tu as oublié `npm run build` du MCP. Relance-le. |
 | Erreur `Cannot find module 'dist/index.js'` | Idem — build manquant. |
 | Erreur GitHub 401 quand l'agent cherche | `GITHUB_TOKEN` non défini. Cf. section ci-dessus. |

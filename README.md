@@ -30,6 +30,8 @@ Sortie attendue : une fiche markdown dans `content/concepts/<date>-extensions.md
 | `skills/` | Expertises chargées à la demande (ex. `tldr-gemini`) |
 | `agents/` | **Sous-agents** délégables — voir ci-dessous |
 | `mcp-servers/gemini-docs/` | Serveur MCP TypeScript qui interroge la doc officielle |
+| `hooks/hooks.json` | Hooks lifecycle de l'extension (bannière SessionStart + garde-fou git) |
+| `scripts/` | Scripts shell appelés par les hooks |
 | `docs/` | Documentation pédagogique transférable |
 | `content/` | Artefacts produits par l'agent (concepts + labs) |
 

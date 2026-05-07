@@ -1,0 +1,28 @@
+{
+  "SessionStart": [
+    {
+      "hooks": [
+        {
+          "type": "command",
+          "name": "anto-agent-gemini-banner",
+          "description": "Affiche au démarrage les commandes disponibles (/concept, /lab) et les garde-fous actifs.",
+          "command": "${extensionPath}${/}scripts${/}session-start.sh"
+        }
+      ]
+    }
+  ],
+  "BeforeTool": [
+    {
+      "matcher": "run_shell_command",
+      "hooks": [
+        {
+          "type": "command",
+          "name": "git-destructive-guard",
+          "description": "Bloque les commandes git destructrices (push --force, reset --hard, clean -fd, branch -D, checkout/restore .).",
+          "command": "${extensionPath}${/}scripts${/}git-guard.sh",
+          "timeout": 5000
+        }
+      ]
+    }
+  ]
+}
