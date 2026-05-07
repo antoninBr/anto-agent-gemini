@@ -1,0 +1,23 @@
+{
+  "name": "@anto-agent-gemini/mcp-gemini-docs",
+  "version": "0.1.0",
+  "private": true,
+  "description": "MCP server qui interroge la doc officielle Gemini (CLI, Code Assist, MCP).",
+  "type": "module",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "smoke:search": "node dist/scripts/smoke-search.js",
+    "smoke:read": "node dist/scripts/smoke-read.js"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.0",
+    "turndown": "^7.2.0",
+    "undici": "^6.21.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "@types/turndown": "^5.0.4",
+    "typescript": "^5.3.0"
+  }
+}
