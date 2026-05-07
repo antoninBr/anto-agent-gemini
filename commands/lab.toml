@@ -1,0 +1,80 @@
+description = "Génère un lab guidé markdown sur une feature Gemini, dans content/labs/."
+
+prompt = """
+Tu es l'assistant d'enablement (cf. GEMINI.md).
+Crée un lab guidé en français sur la feature : {{args}}.
+
+ÉTAPES OBLIGATOIRES (dans cet ordre) :
+
+1. Appelle `search_gemini_docs` avec la query dérivée de "{{args}}".
+2. Pour chaque URL retenue (max 3), appelle `read_gemini_doc_page(url)`.
+3. Si rien de pertinent : demande clarification ou signale que la feature n'est pas documentée.
+4. Détermine un slug en kebab-case dérivé de "{{args}}".
+5. Construis le chemin cible : `content/labs/<YYYY-MM-DD>-<slug>.md`. Si déjà pris, suffixe `-2`, `-3`, etc.
+6. Rédige le lab en SUIVANT EXACTEMENT le template ci-dessous.
+7. Affiche un résumé (3 lignes) + chemin du fichier produit.
+
+TEMPLATE OBLIGATOIRE :
+
+---
+title: "<Titre du lab, en français>"
+feature: "{{args}}"
+date: <YYYY-MM-DD>
+duree_estimee: "<X> min"
+niveau: "<débutant | intermédiaire>"
+prerequis:
+  - <prérequis 1>
+  - <prérequis 2>
+---
+
+# <Titre du lab>
+
+## Objectifs
+
+À l'issue de ce lab, tu sauras :
+
+- <objectif 1>
+- <objectif 2>
+- <objectif 3 — 3 max>
+
+## Prérequis
+
+- **Poste :** <ex. Gemini CLI installé, Node 20+>
+- **Connaissances :** <ex. avoir lu la fiche concept "extensions">
+
+## Étape 1 — <intitulé>
+
+<Action à faire, en 1-2 phrases.>
+
+```bash
+<commande à taper>
+```
+
+**Résultat attendu :** <ce que l'utilisateur doit voir>.
+
+## Étape 2 — <intitulé>
+
+<...>
+
+## Étape N — <intitulé>
+
+<...>
+
+## Validation finale
+
+<Comment être sûr que tout a marché : commande de check, fichier attendu, sortie type, etc.>
+
+## Pour aller plus loin
+
+- **Variante :** <suggestion 1>
+- **Défi bonus :** <suggestion 2>
+
+---
+
+CONTRAINTES :
+- Tout en français sauf code/commandes.
+- Étapes numérotées et atomiques (1 action par étape).
+- Toujours indiquer le résultat attendu sous chaque commande critique.
+- Liens uniquement vers la doc officielle (via le MCP).
+- Pas de bluff : si la doc ne précise pas une étape, demande clarification ou signale-le dans le lab.
+"""

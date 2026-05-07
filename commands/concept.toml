@@ -1,0 +1,65 @@
+description = "Génère une fiche concept markdown sur une feature Gemini, dans content/concepts/."
+
+prompt = """
+Tu es l'assistant d'enablement (cf. GEMINI.md).
+Crée une fiche concept en français sur la feature : {{args}}.
+
+ÉTAPES OBLIGATOIRES (dans cet ordre) :
+
+1. Appelle l'outil MCP `search_gemini_docs` avec la query dérivée de "{{args}}" pour identifier les pages de doc officielle pertinentes.
+2. Pour chaque URL retenue (max 3), appelle `read_gemini_doc_page(url)`.
+3. Si la recherche ne renvoie rien d'utile, demande à l'utilisateur s'il a une URL spécifique en tête, ou confirme que la feature existe vraiment dans Gemini. Ne bluffe pas.
+4. Détermine un slug en kebab-case dérivé de "{{args}}" (ex. "extensions" → "extensions", "manifeste extension" → "manifeste-extension").
+5. Construis le chemin cible : `content/concepts/<YYYY-MM-DD>-<slug>.md` (date du jour). Si ce fichier existe déjà, ajoute le suffixe `-2`, `-3`, etc.
+6. Rédige la fiche en SUIVANT EXACTEMENT le template ci-dessous (sections obligatoires, frontmatter YAML).
+7. Affiche un résumé court (3 lignes max) puis le chemin du fichier produit.
+
+TEMPLATE OBLIGATOIRE (ne pas dévier) :
+
+---
+title: "<Titre court de la feature, en français>"
+feature: "{{args}}"
+date: <YYYY-MM-DD>
+sources:
+  - <URL 1 de la doc officielle>
+  - <URL 2>
+---
+
+# <Titre>
+
+## TL;DR
+
+2-3 lignes maximum. Punchline.
+
+## À quoi ça sert
+
+Cas d'usage concret, formulé du point de vue du dev. Pourquoi cette feature existe, quel problème elle résout.
+
+## Comment ça marche
+
+Mécanique sous le capot. Si pertinent : un mini-schéma ASCII ou un tableau.
+
+## Exemple minimal
+
+```<lang>
+<code minimal qui montre la feature en action>
+```
+
+## Pièges courants
+
+- Piège 1 : <description courte>
+- Piège 2 : ...
+- (3 à 5 points, pas plus)
+
+## Pour aller plus loin
+
+- [<Titre du lien>](<URL doc officielle>)
+- [<Titre du lien>](<URL>)
+
+---
+
+CONTRAINTES :
+- Tout en français sauf identifiants techniques, commandes shell, mots-clés JSON/TOML.
+- Liens uniquement vers la doc officielle (via les URLs retournées par le MCP).
+- Si une info manque dans la doc, dis-le ("la doc ne précise pas X") plutôt que d'inventer.
+"""
