@@ -505,7 +505,7 @@ const GITHUB_API = "https://api.github.com";
 const KNOWN_PAGES: Array<{ title: string; url: string; tags: string[] }> = [
   {
     title: "Gemini Code Assist — Aperçu",
-    url: "https://developers.google.com/gemini-code-assist/docs/overview",
+    url: "https://docs.cloud.google.com/gemini/docs/codeassist/overview",
     tags: ["code assist", "vscode", "ide"],
   },
   {
@@ -1327,10 +1327,10 @@ Sortie attendue : un message de succès + l'extension apparaît dans la liste (c
 ```bash
 git clone https://github.com/antoninBr/anto-agent-gemini.git
 cd anto-agent-gemini
-gemini extensions install --path .
+gemini extensions link .
 ```
 
-L'avantage : tu peux modifier les fichiers et les changements sont pris en compte au prochain `gemini`.
+L'avantage : `link` crée un lien symbolique vers le dossier local, donc tu peux modifier les fichiers et les changements sont pris en compte au prochain `gemini` sans réinstaller.
 
 ## Étape critique : compiler le MCP
 
@@ -1376,13 +1376,15 @@ gemini extensions uninstall anto-agent-gemini
 
 ## Mise à jour
 
-Si tu as installé via la méthode 1 (URL git), ré-exécute la commande pour récupérer la dernière version :
+Si tu as installé via la méthode 1 (URL git), utilise la sous-commande `update` pour récupérer la dernière version :
 
 ```bash
-gemini extensions install https://github.com/antoninBr/anto-agent-gemini --upgrade
+gemini extensions update anto-agent-gemini
+# ou pour tout mettre à jour
+gemini extensions update --all
 ```
 
-Si tu as installé via la méthode 2 (clone local), un simple `git pull` suffit :
+Si tu as installé via la méthode 2 (clone local liée par `link`), un simple `git pull` suffit (le lien symbolique pointe déjà vers ton clone) :
 
 ```bash
 cd anto-agent-gemini
@@ -1639,7 +1641,7 @@ git commit -m "init: fork de anto-agent-gemini pour <techno X>"
 
 ## Prochaine étape
 
-Une fois forké, lance `gemini extensions install --path .` (cf. `02-installation-extension.md` méthode 2) et teste avec `/concept <feature-de-ta-techno>`.
+Une fois forké, lance `gemini extensions link .` (cf. `02-installation-extension.md` méthode 2) et teste avec `/concept <feature-de-ta-techno>`.
 ````
 
 - [ ] **Step 14.2 : Commit**
@@ -1739,10 +1741,10 @@ Attendu : JSON non vide pour search ; markdown non vide pour read.
 - [ ] **Step 16.3 : Installer l'extension localement**
 
 ```bash
-gemini extensions install --path .
+gemini extensions link .
 ```
 
-Attendu : message de succès. Si la commande exacte diffère (cf. notes Tâche 0), ajuste.
+Attendu : message de succès. `link` est le mode développeur officiel (lien symbolique vers le dossier courant). Si une commande diffère, cf. `docs/internal/verification-notes.md`.
 
 - [ ] **Step 16.4 : Vérifier dans Gemini**
 
